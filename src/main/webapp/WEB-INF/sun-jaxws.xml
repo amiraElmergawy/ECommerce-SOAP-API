@@ -1,0 +1,31 @@
+<endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime" version="2.0">
+    <endpoint name="clerkService" implementation="gov.iti.jets.service.servicesImpl.ClerkServiceImpl" url-pattern="/ws/clerkService">
+        <!-- <handler-chains xmlns="https://jakarta.ee/xml/ns/jakartaee">
+            <handler-chain>
+                <handler>
+                    <handler-class>gov.iti.jets.service.servicesImpl.AuthHandler</handler-class>
+                </handler>
+            </handler-chain>
+        </handler-chains> -->
+    </endpoint>
+    <endpoint name="productService" implementation="gov.iti.jets.service.servicesImpl.ProductServiceImpl" url-pattern="/ws/productService">
+        <!-- <handler-chains xmlns="https://jakarta.ee/xml/ns/jakartaee">
+            <handler-chain>
+                <handler>
+                    <handler-class>gov.iti.jets.service.servicesImpl.AuthHandler</handler-class>
+                </handler>
+            </handler-chain>
+        </handler-chains> -->
+    </endpoint>
+    <endpoint name="orderService" implementation="gov.iti.jets.service.servicesImpl.OrderServiceImpl" url-pattern="/ws/orderService">
+        <!-- <handler-chains xmlns="https://jakarta.ee/xml/ns/jakartaee">
+            <handler-chain>
+                <handler>
+                    <handler-class>gov.iti.jets.service.servicesImpl.AuthHandler</handler-class>
+                </handler>
+            </handler-chain>
+        </handler-chains> -->
+    </endpoint>
+    <endpoint name="userService" implementation="gov.iti.jets.service.servicesImpl.UserServiceImpl" url-pattern="/ws/userService">
+    </endpoint>
+</endpoints>
