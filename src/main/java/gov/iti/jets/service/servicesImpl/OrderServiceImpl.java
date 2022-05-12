@@ -10,13 +10,15 @@ import gov.iti.jets.persistence.entities.CustomerEntity;
 import gov.iti.jets.persistence.entities.OrderEntity;
 import gov.iti.jets.persistence.entities.ProductEntity;
 import jakarta.jws.WebMethod;
+import jakarta.jws.WebParam;
 import jakarta.jws.WebService;
 
 @WebService
 public class OrderServiceImpl {
 
     @WebMethod
-    public boolean createOrder(int customerId, double totalPrice, int[] products) {
+    public boolean createOrder(@WebParam(name = "customerId")int customerId,@WebParam(name = "totalPrice") double totalPrice,
+    @WebParam(name = "products") int[] products) {
         CustomerEntity customer = UserDaoImpl.INSTANCE.getUserById(customerId).get();
         OrderEntity order = new OrderEntity(customer, totalPrice);
         for (int productId : products) {
@@ -28,23 +30,37 @@ public class OrderServiceImpl {
     }
 
     @WebMethod
-    public boolean approveOrder(int id) {
+    public boolean approveOrder(@WebParam(name = "id")int id) {
         return OrderDaoImpl.INSTANCE.approveOrder(id);
     }
 
     @WebMethod
-    public boolean updateOrder(int customerId, double totalPrice, int[] products, int orderId) {
-        return false;
+    public boolean updateOrder(@WebParam(name = "customerId")int customerId,@WebParam(name = "totalPrice") double totalPrice,
+    @WebParam(name = "products") int[] products,@WebParam(name = "orderId") int orderId) {
+        CustomerEntity customer = UserDaoImpl.INSTANCE.getUserById(customerId).get();
+        if(customer == null)
+            return false;
+        OrderEntity order = new OrderEntity(customer, totalPrice);
+        for (int productId : products) {
+            ProductEntity product = ProductDaoImpl.INSTANCE.getProductById(productId).get();
+            order.getProductses().add(product);
+        }
+        order.setId(orderId);
+        return OrderDaoImpl.INSTANCE.updateOrder(order);
     }
 
     @WebMethod
-    public boolean deleteOrder(int id) {
-        return false;
+    public boolean deleteOrder(@WebParam(name = "id")int id) {
+        return OrderDaoImpl.INSTANCE.deleteOrder(id);
     }
 
     @WebMethod
-    public Optional<OrderEntity> gOrderById(int id) {
-        return OrderDaoImpl.INSTANCE.gOrderById(id);
+    public OrderEntity gOrderById(@WebParam(name = "id")int id) {
+        Optional<OrderEntity> order = OrderDaoImpl.INSTANCE.gOrderById(id);
+        System.out.println(order);
+        if(order.isPresent())
+            return order.get();
+        throw new RuntimeException("order is not found");
     }
 
     @WebMethod
@@ -53,12 +69,12 @@ public class OrderServiceImpl {
     }
 
     @WebMethod
-    public List<OrderEntity> getOrdersByCustomer(int customerId) {
+    public List<OrderEntity> getOrdersByCustomer(@WebParam(name = "customerId")int customerId) {
         return OrderDaoImpl.INSTANCE.getOrdersByCustomer(customerId);
     }
 
     @WebMethod
-    public boolean cancelOrder(int id) {
+    public boolean cancelOrder(@WebParam(name = "id")int id) {
         return OrderDaoImpl.INSTANCE.cancelOrder(id);
     }
 

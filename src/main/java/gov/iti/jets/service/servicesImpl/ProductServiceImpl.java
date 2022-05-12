@@ -7,14 +7,18 @@ import gov.iti.jets.persistence.daosImpl.ProductDaoImpl;
 import gov.iti.jets.persistence.entities.Category;
 import gov.iti.jets.persistence.entities.ProductEntity;
 import jakarta.jws.WebMethod;
+import jakarta.jws.WebParam;
 import jakarta.jws.WebService;
 
 @WebService
 public class ProductServiceImpl {
 
     @WebMethod
-    public Optional<ProductEntity> getProduct(int id) {
-        return ProductDaoImpl.INSTANCE.getProductById(id);
+    public ProductEntity getProduct(@WebParam(name = "id")int id) {
+        Optional<ProductEntity> product = ProductDaoImpl.INSTANCE.getProductById(id);
+        if(product.isPresent())
+            return product.get();
+        throw new RuntimeException("Product is not found");
     }
 
     @WebMethod
@@ -23,7 +27,8 @@ public class ProductServiceImpl {
     }
 
     @WebMethod
-    public boolean updateProduct(String name, double amount, int categoryId, int quantity, int id) {
+    public boolean updateProduct(@WebParam(name = "name")String name,@WebParam(name = "amount") double amount,@WebParam(name = "categoryId") int categoryId,
+    @WebParam(name = "quantity") int quantity,@WebParam(name = "id") int id) {
         Category category = Category.KITCHEN;
         // LIVINGROOM,BATHROOM,DININGROOM,BEDROOM,KITCHEN;
         switch (categoryId) {
@@ -50,7 +55,7 @@ public class ProductServiceImpl {
     }
 
     @WebMethod
-    public boolean createProduct(String name, double amount, int categoryId, int quantity) {
+    public boolean createProduct(@WebParam(name = "name")String name,@WebParam(name = "amount") double amount,@WebParam(name = "categoryId") int categoryId,@WebParam(name = "quantity") int quantity) {
         Category category = Category.KITCHEN;
         // LIVINGROOM,BATHROOM,DININGROOM,BEDROOM,KITCHEN;
         switch (categoryId) {
@@ -76,17 +81,17 @@ public class ProductServiceImpl {
     }
 
     @WebMethod
-    public List<ProductEntity> search(String key) {
+    public List<ProductEntity> search(@WebParam(name = "key")String key) {
         return ProductDaoImpl.INSTANCE.search(key);
     }
 
     @WebMethod
-    public boolean deleteProduct(int id) {
+    public boolean deleteProduct(@WebParam(name = "id")int id) {
         return ProductDaoImpl.INSTANCE.deleteProduct(id);
     }
 
     @WebMethod
-    public List<ProductEntity> getProductsByCategory(int categoryId) {
+    public List<ProductEntity> getProductsByCategory(@WebParam(name = "categoryId")int categoryId) {
         Category category = Category.KITCHEN;
         // LIVINGROOM,BATHROOM,DININGROOM,BEDROOM,KITCHEN;
         switch (categoryId) {

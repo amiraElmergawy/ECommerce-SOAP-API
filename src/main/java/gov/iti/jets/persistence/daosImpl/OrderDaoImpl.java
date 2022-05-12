@@ -44,9 +44,14 @@ public enum OrderDaoImpl implements OrderDao {
 
     @Override
     public boolean updateOrder(OrderEntity orderEntity) {
+        OrderEntity orderEntity2 =  entityManager.find(OrderEntity.class, orderEntity.getId());
+        if(orderEntity2 == null)
+            return false;
         if (!entityManager.getTransaction().isActive())
             entityManager.getTransaction().begin();
         try {
+            orderEntity.setIsCanceled(orderEntity2.getIsCanceled());
+            orderEntity.setIsSubmitted(orderEntity2.getIsSubmitted());
             entityManager.merge(orderEntity);
             entityManager.getTransaction().commit();
             return true;
@@ -70,7 +75,10 @@ public enum OrderDaoImpl implements OrderDao {
 
     @Override
     public Optional<OrderEntity> gOrderById(int id) {
-        return Optional.of(entityManager.find(OrderEntity.class, id));
+        OrderEntity orderEntity = entityManager.find(OrderEntity.class, id);
+        if(orderEntity == null)
+            return Optional.empty();
+        return Optional.of(orderEntity);
     }
 
     @Override

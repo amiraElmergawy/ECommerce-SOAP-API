@@ -18,7 +18,10 @@ public enum ProductDaoImpl implements ProductDao {
 
     @Override
     public Optional<ProductEntity> getProductById(int id) {
-        return Optional.of(entityManager.find(ProductEntity.class, id));
+        ProductEntity productEntity = entityManager.find(ProductEntity.class, id);
+        if(productEntity == null)
+            return Optional.empty();
+        return Optional.of(productEntity); 
     }
 
     @Override
@@ -60,7 +63,7 @@ public enum ProductDaoImpl implements ProductDao {
 
     @Override
     public List<ProductEntity> search(String productName) {
-        Query query = entityManager.createQuery("from ProductEntity where productName like :value", ProductEntity.class)
+        Query query = entityManager.createQuery("from ProductEntity where name like :value", ProductEntity.class)
                 .setParameter("value", "%" + productName + "%");
         return query.getResultList();
     }

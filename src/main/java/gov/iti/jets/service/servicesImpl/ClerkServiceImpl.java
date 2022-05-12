@@ -6,13 +6,15 @@ import java.util.Optional;
 import gov.iti.jets.persistence.daosImpl.ClerkDaoImpl;
 import gov.iti.jets.persistence.entities.ClerkEntity;
 import jakarta.jws.WebMethod;
+import jakarta.jws.WebParam;
 import jakarta.jws.WebService;
 
 @WebService
 public class ClerkServiceImpl {
 
     @WebMethod
-    public boolean createClerk(String username, String password, String email, String phone) {
+    public boolean createClerk(@WebParam(name = "usernmae") String username, @WebParam(name = "password") String password, @WebParam(name = "email") String email,
+    @WebParam(name = "phone") String phone) {
         ClerkEntity clerk = new ClerkEntity();
         clerk.setEmail(email);
         clerk.setPassword(password);
@@ -22,7 +24,8 @@ public class ClerkServiceImpl {
     }
 
     @WebMethod
-    public boolean updateClerk(String username, String password, String email, String phone, int id) {
+    public boolean updateClerk(@WebParam(name = "username") String username,@WebParam(name = "password") String password,@WebParam(name = "email") String email,
+    @WebParam(name = "phone") String phone,@WebParam(name = "id") int id) {
         ClerkEntity clerk = new ClerkEntity();
         clerk.setEmail(email);
         clerk.setPassword(password);
@@ -33,13 +36,17 @@ public class ClerkServiceImpl {
     }
 
     @WebMethod
-    public boolean deleteClerk(int id) {
+    public boolean deleteClerk(@WebParam(name = "id")int id) {
         return ClerkDaoImpl.INSTANCE.deleteClerk(id);
     }
 
     @WebMethod
-    public Optional<ClerkEntity> getClerkById(int id) {
-        return ClerkDaoImpl.INSTANCE.getClerkById(id);
+    public ClerkEntity getClerkById(@WebParam(name = "id")int id) {
+        Optional<ClerkEntity> clerk = ClerkDaoImpl.INSTANCE.getClerkById(id);
+        if(clerk.isPresent())
+            return clerk.get();
+        else
+            throw new RuntimeException("Clerk is not found");
     }
 
     @WebMethod

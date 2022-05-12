@@ -56,12 +56,15 @@ public enum ClerkDaoImpl implements ClerkDao {
 
     @Override
     public Optional<ClerkEntity> getClerkById(int id) {
-        return Optional.of(entityManager.find(ClerkEntity.class, id));
+        ClerkEntity clerkEntity = entityManager.find(ClerkEntity.class, id);
+        if(clerkEntity == null)
+            return Optional.empty(); 
+        return Optional.of(clerkEntity);
     }
 
     @Override
     public List<ClerkEntity> getClerks() {
-        return entityManager.createQuery("SELECT * FROM ecommerce.users where userType='clerks'", ClerkEntity.class).getResultList();
+        return entityManager.createQuery("from clerks", ClerkEntity.class).getResultList();
     }
 
 }

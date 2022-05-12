@@ -19,38 +19,38 @@ import jakarta.persistence.Persistence;
 
 public class App {
     public static void main(String[] args) {
-        // EntityManagerFactory entityManagerFactory =
-        // Persistence.createEntityManagerFactory("aae");
-        // EntityManager entityManager = entityManagerFactory.createEntityManager();
-        // entityManager.getTransaction().begin();
-        // AdminEntity user = new AdminEntity();
-        // user.setEmail("email2");
-        // // user.setAddress("address");
-        // user.setPassword("password");
-        // user.setPhone("phone2");
-        // user.setUsername("username2");
-        // // entityManager.persist(user);
-        // ProductEntity product = new ProductEntity();
-        // product.setName("name");
-        // // product.setQuantity(5);
-        // product.setAmount(400);
-        // product.setCategory(Category.BATHROOM);
-        // entityManager.merge(product);
-        // System.out.println(entityManager.find(ProductEntity.class, 1));
-        // entityManager.getTransaction().commit();
-        // entityManager.close();
-        // entityManagerFactory.close();
+        EntityManagerFactory entityManagerFactory =
+        Persistence.createEntityManagerFactory("aae");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        AdminEntity user = new AdminEntity();
+        user.setEmail("email2");
+        // user.setAddress("address");
+        user.setPassword("password");
+        user.setPhone("phone2");
+        user.setUsername("username2");
+        // entityManager.persist(user);
+        ProductEntity product = new ProductEntity();
+        product.setName("name");
+        // product.setQuantity(5);
+        product.setAmount(400);
+        product.setCategory(Category.BATHROOM);
+        entityManager.merge(product);
+        System.out.println(entityManager.find(ProductEntity.class, 1));
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        entityManagerFactory.close();
 
-        // System.out.println(ProductDaoImpl.INSTANCE.getProductById(3).get());
+        System.out.println(ProductDaoImpl.INSTANCE.getProductById(3).get());
 
-        // System.out.println(ProductDaoImpl.INSTANCE.createProduct(new
-        // ProductEntity("product", 600, Category.KITCHEN)));
+        System.out.println(ProductDaoImpl.INSTANCE.createProduct(new
+        ProductEntity("product", 600, Category.KITCHEN)));
 
-        // CustomerEntity user = UserDaoImpl.INSTANCE.getUserById(1).get();
-        // System.out.println(OrderDaoImpl.INSTANCE.createOrder(new OrderEntity(user,
-        // 5000)));
+    //     CustomerEntity user = UserDaoImpl.INSTANCE.getUserById(1).get();
+    //     System.out.println(OrderDaoImpl.INSTANCE.createOrder(new OrderEntity(user,
+    //     5000)));
 
-        // System.out.println(OrderDaoImpl.INSTANCE.cancelOrder(1));
+    //     System.out.println(OrderDaoImpl.INSTANCE.cancelOrder(1));
 
     // System.out.println(ProductServiceImpl.INSTANCE.createProduct("product name", 5, 3, 1));
     }

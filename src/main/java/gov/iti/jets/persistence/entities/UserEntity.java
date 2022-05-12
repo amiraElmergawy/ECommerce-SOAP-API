@@ -12,6 +12,8 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.xml.bind.annotation.XmlTransient;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -98,6 +100,7 @@ public class UserEntity implements java.io.Serializable {
     }
 
 
+    @XmlTransient
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
     public Set<OrderEntity> getOrderses() {
         return this.orderses;

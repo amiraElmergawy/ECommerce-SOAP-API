@@ -14,6 +14,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.xml.bind.annotation.XmlTransient;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import java.util.*;
@@ -76,7 +77,7 @@ public class ProductEntity implements java.io.Serializable {
         this.quantity = quantity;
     }
 
-    @Column(name = "amount", nullable = false, precision = 22, scale = 0)
+    @Column(name = "amount", nullable = false)
     public double getAmount() {
         return this.amount;
     }
@@ -95,6 +96,7 @@ public class ProductEntity implements java.io.Serializable {
         this.category = category;
     }
 
+    @XmlTransient
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "orders_has_products", catalog = "ecommerce", joinColumns = {
             @JoinColumn(name = "products_id", nullable = false, updatable = false) }, inverseJoinColumns = {
