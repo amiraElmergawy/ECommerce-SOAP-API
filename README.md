@@ -5,7 +5,7 @@ A simple ecommerce restful api using JAX-WS.
 
 ## Documentation
 
-[SOAP UI]()
+[SOAP UI](https://github.com/amiraElmergawy/ECommerce-SOAP-API/blob/main/e-commerce-api-soapui-project.xml)
 
 
 ## Features
